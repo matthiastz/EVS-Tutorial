@@ -1,0 +1,37 @@
+* {
+    font: 14px normal Arial, sans-serif;
+    color: #000000;
+}
+table {
+    margin: 50px auto;
+}
+table, td {
+    border: 1px solid #aaa;
+    border-collapse: collapse;
+}
+th {
+    padding: 10px;
+    font-weight: bold;
+}
+td {
+    background-color: #eeeeee;
+    width: 80px;
+    height: 80px;
+}
+
+/* cursor changes behaviour over table elements */
+table tr td {
+    cursor: pointer;
+}
+div#Log {
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    width: 120px;
+    height: 310px;
+    margin-left: 180px;
+    background-color: #eeeeee;
+    border: 1px solid #aaa;
+    padding: 10px;
+    overflow: auto;
+}

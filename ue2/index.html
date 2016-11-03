@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="de-DE">
+<head>
+    <meta charset="UTF-8" />
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="script.js"></script>
+</head>
+
+<body>
+
+<div id="Log"></div>
+
+<!-- grey table -->
+<table>
+    <tbody>
+    <tr>
+        <td onclick="setField(this)"></td>
+        <td onclick="setField(this)"></td>
+        <td onclick="setField(this)"></td>
+        <td onclick="setField(this)"></td>
+    </tr>
+    <tr>
+        <td onclick="setField(this)"></td>
+        <td onclick="setField(this)"></td>
+        <td onclick="setField(this)"></td>
+        <td onclick="setField(this)"></td>
+    </tr>
+    <tr>
+        <td onclick="setField(this)"></td>
+        <td onclick="setField(this)"></td>
+        <td onclick="setField(this)"></td>
+        <td onclick="setField(this)"></td>
+    </tr>
+    <tr>
+        <td onclick="setField(this)"></td>
+        <td onclick="setField(this)"></td>
+        <td onclick="setField(this)"></td>
+        <td onclick="setField(this)"></td>
+    </tr>
+    </tbody>
+</table>
+
+<!-- bottom color table -->
+<table>
+    <thead>
+    <tr>
+        <th colspan="4">Choose a color:</th>
+    </tr>
+    </thead>
+    <!-- color row -->
+    <tbody>
+    <tr>
+
+        <!-- TODO: parameter has to be string .. doku? -->
+
+        <td onclick="setFillColor(this.style.backgroundColor)" style="background-color:#CC3333;"></td>
+        <td onclick="setFillColor(this.style.backgroundColor)" style="background-color:#3399FF;"></td>
+        <td onclick="setFillColor(this.style.backgroundColor)" style="background-color:#339933;"></td>
+        <td onclick="setFillColor(this.style.backgroundColor)" style="background-color:#999933;"></td>
+    </tr>
+    </tbody>
+</table>
+
+</body>
+</html>
