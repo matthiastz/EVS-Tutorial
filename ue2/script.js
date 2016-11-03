@@ -5,7 +5,6 @@
 var lastField = null;
 var currentFillColor = ''; // ???
 var changeCounter = 0;     // ???
-var elementIsGrey = true;
 
 var stdGrey = "rgb(238, 238, 238)"; // grey color: bad, because it is hard coded :(
 
@@ -15,7 +14,6 @@ var stdGrey = "rgb(238, 238, 238)"; // grey color: bad, because it is hard coded
  */
 function setField(element) {
     element.style.backgroundColor = (element.style.backgroundColor == stdGrey)? currentFillColor : stdGrey;
-    elementIsGrey = !elementIsGrey;
 
     changeCounter++;
     if (changeCounter == 10) {
