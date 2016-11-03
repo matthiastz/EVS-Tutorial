@@ -1,0 +1,73 @@
+body {
+	font-family: "Arial", Sans, Sans-serif;
+	margin: 1em;
+	background-color: rgb(230,230,230);
+}
+
+#wrapper {
+	padding: 1em;
+	background-color: white;
+    position: relative;
+	z-index: 0;
+}
+
+
+h1 {
+	background-color: green;
+	color: white;
+    padding: 0.3em;
+}
+
+/** left div : menu, position is absolute to parent div <wrapper> */
+#left {
+	width: 12%;
+	height: 100%;
+    position: absolute; /* Stay in place */
+    top: 0em; /* Place menu with some space from the top */
+    left: 2em;
+	border-style: none solid none none;
+	border-color: green;
+}
+
+#right {
+	margin-left: 15%;
+
+}
+
+p.backgroundText {
+	font-size: 10em;
+    font-style: italic;
+    font-weight: bold;
+	color: orange;
+    opacity: 0.5;
+	position: absolute;
+	left: 17%;
+	top: -25%;
+	z-index: -1;
+}
+
+table {
+    border-collapse: collapse;
+	border: 1px solid green;
+	width: 30%;
+	height: 30%;
+	text-align: left;
+	margin: auto;
+}
+
+
+/* table header, element */
+th, td {
+	padding: 0.5em;
+
+}
+
+td {
+	border: 1px solid green;
+}
+
+th {
+	color: white;
+	background-color: green;
+}
+
