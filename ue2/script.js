@@ -13,10 +13,10 @@ var stdGrey = "rgb(238, 238, 238)"; // grey color: bad, because it is hard coded
  * @param element contains the current html element
  */
 function setField(element) {
-    element.style.backgroundColor = (element.style.backgroundColor == stdGrey)? currentFillColor : stdGrey;
+    element.style.backgroundColor = (element.style.backgroundColor === stdGrey)? currentFillColor : stdGrey;
 
     changeCounter++;
-    if (changeCounter == 10) {
+    if (changeCounter === 10) {
         window.alert("You have clicked 10 times on the field!");
     }
 }
@@ -30,7 +30,7 @@ function setFillColor(color) {
     currentFillColor = color;
 
     // create new element with name, text & color value
-    var newText = document.createElement("newText");
+    var newText = document.createElement('p');
     newText.innerHTML = "Color changed ";
     newText.style.color = currentFillColor;
 
