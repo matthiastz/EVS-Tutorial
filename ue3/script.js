@@ -7,23 +7,60 @@ var cssProperties = "";
 var squareCount = 16;
 var idTable = "tableTopRoot";
 
-function setX(elementID) {
+// IDs
+var textID = "text";
+var xFieldID = "field_x";
+var yFieldID = "field_y";
+var cssFieldID = "css";
+
+window.onload = function () {
+    document.getElementById(textID).addEventListener("change", setText);
+    document.getElementById(xFieldID).addEventListener("change", setX);
+    document.getElementById(yFieldID).addEventListener("change", setY);
+    document.getElementById(cssFieldID).addEventListener("change", setCssProperties);
+}
+
+//===============================
+// setter functions
+//===============================
+
+function setText() {
+
+    var tmp = document.getElementById(textID).value;
+    // TODO: check input
+    textInput = tmp;
+}
+
+
+function setX() {
     // TODO check if number
 
-    var tmp = document.getElementById(elementID).value;
+    var tmp = document.getElementById(xFieldID).value;
     tmp = parseInt(tmp, 10);
 
     x = tmp;
 }
 
-function setY(elementID) {
+function setY() {
     // TODO: check input
 
-    var tmp = document.getElementById(elementID).value;
+    var tmp = document.getElementById(yFieldID).value;
     tmp = parseInt(tmp, 10);
 
     y = tmp;
 }
+
+function setCssProperties() {
+    // add css properties to global string variable
+    // TODO: test if input are correct css properties
+    cssProperties = document.getElementById(cssFieldID).value;
+}
+
+
+//===============================
+// manipulate squares
+//===============================
+
 
 function addNeededSquares(count) {
 
@@ -63,13 +100,6 @@ function addNeededSquares(count) {
     }
 }
 
-function setText(elementID) {
-
-    var tmp = document.getElementById(elementID).value;
-    // TODO: check input
-    textInput = tmp;
-}
-
 function resetSquare(htmlElement) {
 
     // TODO idea: use onload() and save a std sqaure element with all default css values
@@ -78,11 +108,15 @@ function resetSquare(htmlElement) {
     htmlElement.style.backgroundColor = stdGrey;
 }
 
-function setCssProperties(elementID) {
-    // add css properties to global string variable
-    // TODO: test if input are correct css properties
-    cssProperties = document.getElementById(elementID).value;
-}
+/**
+ *
+ * TODO: use   DOM API
+ * addEventListener()
+ * document.getEByTagname(tbody)[0]
+ *
+ *
+ */
+
 
 /**
  * update the html element and its style (x,y)
