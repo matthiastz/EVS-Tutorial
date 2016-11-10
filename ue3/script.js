@@ -3,7 +3,9 @@ var x = 0;
 var y = 0;
 var textInput = "";
 var stdGrey = "#eeeeee";
-var cssProperties = {};
+var cssProperties = "";
+var squareCount = 16;
+var idTable = "tableTopRoot";
 
 function setX(elementID) {
     // TODO check if number
@@ -11,9 +13,7 @@ function setX(elementID) {
     var tmp = document.getElementById(elementID).value;
     tmp = parseInt(tmp, 10);
 
-    if (tmp >= 0) {
-        x = tmp;
-    }
+    x = tmp;
 }
 
 function setY(elementID) {
@@ -22,8 +22,26 @@ function setY(elementID) {
     var tmp = document.getElementById(elementID).value;
     tmp = parseInt(tmp, 10);
 
-    if (tmp >= 0) {
-        y = tmp;
+    y = tmp;
+}
+
+function addNeededSqaures(index) {
+
+    var table = document.getElementById(idTable);
+
+    if (x <= 100 && y <= 100) {
+        for (var i = 0; i < index; i++) {
+            // create a row each 4 td
+            if (i % 4 == 0) {
+                var node = document.createElement("tr");
+                table.appendChild(node);
+            }
+            var node = document.createElement("td");
+            table.appendChild(node);
+            squareCount++;
+        }
+    } else {
+        window.alert("x and y must be <= 100 !");
     }
 }
 
@@ -43,29 +61,23 @@ function resetSquare(htmlElement) {
 }
 
 function setCssProperties(elementID) {
-    // split string by ';'
-    var string = document.getElementById(elementID).value;
-    cssProperties = string.split(';');
+    // add css properties to global string variable
+    // TODO: test if input are correct css properties
+    cssProperties = document.getElementById(elementID).value;
 }
 
 /**
  * update the html element and its style (x,y)
  */
 function updateSquare() {
-    // test
     var index = x + (y * 4);
 
+    if (index > squareCount) {
+        addNeededSqaures(index);
+    }
+
     var	nodelist = document.getElementsByTagName("td");
-    //nodelist[index].style.backgroundColor = "red";
     nodelist[index].innerHTML = textInput;
-
-    // split key and value of the css proprties in the list by ':'
-
-    nodelist[index].setAttribute("style", cssProperties[0]);
-
-    //for (var i = 0; i < cssProperties.length; i++) {
-    //    nodelist[index].style.backgroundColor = cssProperties[i] ;
-    //}
-
+    nodelist[index].setAttribute("style", cssProperties);
 }
 
