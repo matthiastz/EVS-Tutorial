@@ -1,0 +1,26 @@
+* {
+    font: 14px normal Arial, sans-serif;
+    color: #000000;
+}
+table {
+    margin: 50px auto;
+}
+table, td {
+    border: 1px solid #aaa;
+    border-collapse: collapse;
+}
+th {
+    padding: 10px;
+    font-weight: bold;
+}
+td {
+    background-color: #eeeeee;
+    width: 80px;
+    height: 80px;
+}
+table:first-child tr td {
+    cursor: pointer;
+}
+td[colspan="4"]{
+    text-align:center;
+}

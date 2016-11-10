@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="de-DE">
+    <head>
+        <meta charset="UTF-8"/>
+        <link rel="stylesheet" type="text/css" href="style.css">
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <table>
+            <tbody>
+                <tr>
+                    <td onclick=resetSquare(this)></td>
+                    <td onclick=resetSquare(this)></td>
+                    <td onclick=resetSquare(this)></td>
+                    <td onclick=resetSquare(this)></td>
+                </tr>
+                <tr>
+                    <td onclick=resetSquare(this)></td>
+                    <td onclick=resetSquare(this)></td>
+                    <td onclick=resetSquare(this)></td>
+                    <td onclick=resetSquare(this)></td>
+                </tr>
+                <tr>
+                    <td onclick=resetSquare(this)></td>
+                    <td onclick=resetSquare(this)></td>
+                    <td onclick=resetSquare(this)></td>
+                    <td onclick=resetSquare(this)></td>
+                </tr>
+                <tr>
+                    <td onclick=resetSquare(this)></td>
+                    <td onclick=resetSquare(this)></td>
+                    <td onclick=resetSquare(this)></td>
+                    <td onclick=resetSquare(this)></td>
+                </tr>
+            </tbody>
+        </table>
+        <table>
+            <thead>
+                <tr>
+                    <th colspan="4">Fill a field:</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Text: <br/><input onchange=setText(this.id) type="text" id="text" value=""></td>
+                    <td>Field X: <br/><input onchange=setX(this.id) type="text" id="field_x" value=""></td>
+                    <td>Field Y: <br/><input onchange=setY(this.id) type="text" id="field_y" value=""></td>
+                    <td>CSS: <br/><input onchange=setCssProperties(this.id) type="text" id="css" value=""></td>
+                </tr>
+                <tr>
+                    <td onclick=updateSquare() colspan="4"><button id="mybutton">Fill</button></td>
+                </tr>
+            </tbody>
+        </table>
+    </body>
+</html>
