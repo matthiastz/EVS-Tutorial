@@ -12,12 +12,14 @@ var textID = "text";
 var xFieldID = "field_x";
 var yFieldID = "field_y";
 var cssFieldID = "css";
+var btnID = "mybutton";
 
 window.onload = function () {
     document.getElementById(textID).addEventListener("change", setText);
     document.getElementById(xFieldID).addEventListener("change", setX);
     document.getElementById(yFieldID).addEventListener("change", setY);
     document.getElementById(cssFieldID).addEventListener("change", setCssProperties);
+    document.getElementById(btnID).addEventListener("click", updateSquare);
 }
 
 //===============================
@@ -111,7 +113,6 @@ function resetSquare(htmlElement) {
 /**
  *
  * TODO: use   DOM API
- * addEventListener()
  * document.getEByTagname(tbody)[0]
  *
  *
