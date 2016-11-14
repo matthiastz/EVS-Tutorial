@@ -2,10 +2,8 @@
 var x = 0;
 var y = 0;
 var textInput = "";
-var stdGrey = "#eeeeee";
 var cssProperties = "";
 var squareCount = 16;
-var idTable = "tableTopRoot";
 
 // IDs
 var textID = "text";
@@ -14,12 +12,33 @@ var yFieldID = "field_y";
 var cssFieldID = "css";
 var btnID = "mybutton";
 
+// table list thingy
+var tbodyListTop = {};
+
 window.onload = function () {
+    tbodyListTop = document.getElementsByTagName("tbody")[0];
     document.getElementById(textID).addEventListener("change", setText);
     document.getElementById(xFieldID).addEventListener("change", setX);
     document.getElementById(yFieldID).addEventListener("change", setY);
     document.getElementById(cssFieldID).addEventListener("change", setCssProperties);
     document.getElementById(btnID).addEventListener("click", updateSquare);
+
+    // add event listener to reset squares
+    var sq = tbodyListTop.getElementsByTagName("td");
+
+    // only last element gets eventhandler...wtf
+    for (var i = 0; i < sq.length; i++) {
+        var temp = sq[i];
+      sq[i].addEventListener("click", function () {
+          resetSquare(temp)
+      });
+    }
+    sq.addEventListener("click", resetSquare);
+   // window.alert(sq.length);
+}
+
+function foo() {
+    window.alert("foo");
 }
 
 //===============================
@@ -40,7 +59,11 @@ function setX() {
     var tmp = document.getElementById(xFieldID).value;
     tmp = parseInt(tmp, 10);
 
-    x = tmp;
+    if (tmp >= 0 && tmp <= 10) {
+        x = tmp;
+    } else {
+        window.alert("x must be >= 0 && <= 10");
+    }
 }
 
 function setY() {
@@ -49,7 +72,11 @@ function setY() {
     var tmp = document.getElementById(yFieldID).value;
     tmp = parseInt(tmp, 10);
 
-    y = tmp;
+    if (tmp >= 0 && tmp <= 10) {
+        y = tmp;
+    } else {
+        window.alert("y must be >= 0 && <= 10");
+    }
 }
 
 function setCssProperties() {
@@ -64,59 +91,44 @@ function setCssProperties() {
 //===============================
 
 
-function addNeededSquares(count) {
+function addRows() {
+    var tableRows = tbodyListTop.getElementsByTagName("tr");
+    var rowCountExisting = tableRows.length;
+    var rowCountToAdd  = y - rowCountExisting;
+    var colCountExisting = tbodyListTop.getElementsByTagName("td").length / tableRows.length;
 
-    var table = document.getElementById(idTable);
-
-    // who needs so many td's ? :D
-    if (x <= 100 && y <= 100) {
-
-        // create rows
-        var trCount = count / 4;
-
-        for (var i = 0; i < trCount; i++) {
-
-            if (count >= 4) {
-                var node = document.createElement("tr");
-                // add class name to identify these cells
-                node.insertCell(0).className = "square";
-                node.insertCell(1).className = "square";
-                node.insertCell(2).className = "square";
-                node.insertCell(3).className = "square";
-
-                table.appendChild(node);
-                squareCount += 4;
-                count -= 4;
+    if (rowCountToAdd > 0) {
+        for (var i = 0; i < rowCountToAdd; i++) {
+            var row = tbodyListTop.insertRow(-1);
+            for (var j = 0; j < colCountExisting; j++) {
+                row.insertCell(-1);
             }
         }
-
-        // create td's
-        for (var i = 0; i < count; i++) {
-            var node = document.createElement("td");
-            node.className = "square";
-            table.appendChild(node);
-            squareCount++;
-        }
-    } else {
-        window.alert("x and y must be <= 100 !");
     }
 }
 
-function resetSquare(htmlElement) {
+function addColumns() {
+    var tableRows = tbodyListTop.getElementsByTagName("tr");
+    var colCountExisting = tbodyListTop.getElementsByTagName("td").length / tableRows.length;
+    var colCountToAdd =  x - colCountExisting;
+    var rowCountExisting = tableRows.length;
+
+    if (colCountToAdd > 0) {
+        for (var i = 0; i < rowCountExisting; i++) {
+            for (var j = 0; j < colCountToAdd; j++) {
+                tableRows[i].insertCell(-1);
+            }
+        }
+    }
+}
+
+function resetSquare(elem) {
 
     // TODO idea: use onload() and save a std sqaure element with all default css values
 
-    htmlElement.innerHTML = "";
-    htmlElement.style.backgroundColor = stdGrey;
+    elem.innerHTML = "";
+    elem.style = "";
 }
-
-/**
- *
- * TODO: use   DOM API
- * document.getEByTagname(tbody)[0]
- *
- *
- */
 
 
 /**
@@ -131,12 +143,23 @@ function updateSquare() {
 
     var neededSquares = index + 1;
 
-    if (neededSquares > squareCount) {
-        addNeededSquares(neededSquares - squareCount);
+    if (x > 4 || y > 4) {
+        addColumns();
+        addRows();
     }
 
-    var	nodelist = document.getElementsByClassName("square");
-    nodelist[index].innerHTML = textInput;
-    nodelist[index].setAttribute("style", cssProperties);
+
+    /**
+     * TODO: use DOM nav functions, access correct squares
+     * TODO: index starts with 1/1 not 0/0
+     * TODO: spaltenbreite soll nicht 4 bleiben, sondern sich eben anpassen (5+ spalten, mehr zeilen)
+     * TODO: remove table and create new??? :D
+     */
+
+
+    var squareList = tbodyListTop.getElementsByTagName("td");
+
+    squareList[index].innerHTML = textInput;
+    squareList[index].setAttribute("style", cssProperties);
 }
 
