@@ -3,7 +3,6 @@ var x = 0;
 var y = 0;
 var textInput = "";
 var cssProperties = "";
-var squareCount = 16;
 
 // IDs
 var textID = "text";
@@ -22,23 +21,6 @@ window.onload = function () {
     document.getElementById(yFieldID).addEventListener("change", setY);
     document.getElementById(cssFieldID).addEventListener("change", setCssProperties);
     document.getElementById(btnID).addEventListener("click", updateSquare);
-
-    // add event listener to reset squares
-    var sq = tbodyListTop.getElementsByTagName("td");
-
-    // only last element gets eventhandler...wtf
-    for (var i = 0; i < sq.length; i++) {
-        var temp = sq[i];
-      sq[i].addEventListener("click", function () {
-          resetSquare(temp)
-      });
-    }
-    sq.addEventListener("click", resetSquare);
-   // window.alert(sq.length);
-}
-
-function foo() {
-    window.alert("foo");
 }
 
 //===============================
@@ -79,8 +61,10 @@ function setY() {
     }
 }
 
+/**
+ * add css properties to global string variable
+ */
 function setCssProperties() {
-    // add css properties to global string variable
     // TODO: test if input are correct css properties
     cssProperties = document.getElementById(cssFieldID).value;
 }
@@ -90,7 +74,9 @@ function setCssProperties() {
 // manipulate squares
 //===============================
 
-
+/**
+ * add necessary rows to table at the top
+ */
 function addRows() {
     var tableRows = tbodyListTop.getElementsByTagName("tr");
     var rowCountExisting = tableRows.length;
@@ -107,6 +93,9 @@ function addRows() {
     }
 }
 
+/**
+ * add necessary columns to table at the top
+ */
 function addColumns() {
     var tableRows = tbodyListTop.getElementsByTagName("tr");
     var colCountExisting = tbodyListTop.getElementsByTagName("td").length / tableRows.length;
@@ -122,10 +111,11 @@ function addColumns() {
     }
 }
 
+/**
+ * reset the style and inner html of a given html element
+ * @param elem is the given html element
+ */
 function resetSquare(elem) {
-
-    // TODO idea: use onload() and save a std sqaure element with all default css values
-
     elem.innerHTML = "";
     elem.style = "";
 }
@@ -135,31 +125,21 @@ function resetSquare(elem) {
  * update the html element and its style (x,y)
  */
 function updateSquare() {
-    var index = x + (y * 4);
 
-    // TODO: bug with tr count ?
-
-    // TODO: bug: empty table cells when adding multiple new squares
-
-    var neededSquares = index + 1;
-
-    if (x > 4 || y > 4) {
+    if (x > 4) {
         addColumns();
+    }
+    if (y > 4) {
         addRows();
     }
 
+    var elem = tbodyListTop.rows[y-1].getElementsByTagName("td")[x-1];
+    elem.innerHTML = textInput;
+    elem.setAttribute("style", cssProperties);
 
-    /**
-     * TODO: use DOM nav functions, access correct squares
-     * TODO: index starts with 1/1 not 0/0
-     * TODO: spaltenbreite soll nicht 4 bleiben, sondern sich eben anpassen (5+ spalten, mehr zeilen)
-     * TODO: remove table and create new??? :D
-     */
-
-
-    var squareList = tbodyListTop.getElementsByTagName("td");
-
-    squareList[index].innerHTML = textInput;
-    squareList[index].setAttribute("style", cssProperties);
+    // only set event listener to square that already was changed
+    elem.addEventListener("click", function () {
+        resetSquare(elem)
+    });
 }
 
