@@ -1,0 +1,11 @@
+body {
+    font: 15px normal Arial, sans-serif;
+    color: #000000;
+}
+label {
+    width: 5em;
+    display: inline-block;
+}
+ul {
+    padding: 0;
+}
