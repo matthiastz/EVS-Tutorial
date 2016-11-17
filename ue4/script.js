@@ -16,30 +16,47 @@ window.onload = function () {
 
     xHttp.onreadystatechange = function() {
         if (this.readyState == 4 && this.status == 200) {
-
             // parse response from JSON in js object
-            allGbEntries = JSON.parse(this.responseText);
-
-            // process the js object
-            for (var i = 0; i < allGbEntries.length; i++) {
-                var newItem = document.createElement("li");
-                var textNode = document.createElement("p");
-                textNode.innerHTML = getTextFromJsObj(allGbEntries[i]);
-
-                newItem.appendChild(textNode);
-                listTop.insertBefore(newItem, listTop.childNodes[0]);
-            }
+            renderGbAtStart(JSON.parse(this.responseText));
         }
     };
     xHttp.open("GET", vsrUrl, true);
     xHttp.send();
 }
 
-function getTextFromJsObj(jsObject) {
+function renderGbAtStart(gbObject) {
+    allGbEntries = gbObject;
 
-    // TODO: find better solution, use dom navigation / element creating, append etc
+    // process the js object
+    for (var i = 0; i < allGbEntries.length; i++) {
+        var newItem = createGbEntry(allGbEntries[i]);
+        listTop.insertBefore(newItem, listTop.childNodes[0]);
+    }
+}
 
-    var string = "";
-    string += "<strong>" + jsObject.name + "</strong> " + jsObject.text;
-    return string;
+function createGbEntry(jsObject) {
+    var liEntry = document.createElement("li");
+    var divName = document.createElement("div");
+    var divText = document.createElement("div");
+    var xHref = document.createElement("a");
+
+    divName.innerHTML = jsObject.name;
+    divName.style.fontWeight = "bold";
+    divText.innerHTML = jsObject.text;
+    xHref.innerHTML = "(X)";
+    xHref.href = "#";
+    xHref.alt = "Delete entry";
+    xHref.addEventListener("click", function () {
+        // remove childs
+        while (liEntry.firstChild) {
+            liEntry.removeChild(liEntry.firstChild);
+        }
+        // after that remove the parent node (li)
+        listTop.removeChild(liEntry);
+    });
+
+    liEntry.appendChild(divName);
+    liEntry.appendChild(divText);
+    liEntry.appendChild(xHref);
+    return liEntry;
 }
