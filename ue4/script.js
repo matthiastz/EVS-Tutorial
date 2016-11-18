@@ -13,7 +13,7 @@ window.onload = function () {
 
     // event listener
     document.getElementsByTagName("button")[0].addEventListener("click", function (event) {
-            event.preventDefault();
+            event.preventDefault(); // prevent new load?!
             SubmitEntry();
     });
 
@@ -35,25 +35,26 @@ function renderGbAtStart(gbResponse) {
 
     // process the js object
     for (var i = 0; i < allGbEntries.length; i++) {
-        var newItem = createGbEntry(allGbEntries[i]);
+        var tmp = allGbEntries[i];
+        var newItem = createGbEntry(tmp.id, tmp.name, tmp.text);
         listTop.insertBefore(newItem, listTop.childNodes[0]);
     }
 }
 
-function createGbEntry(jsObject) {
+function createGbEntry(id, name, text) {
     var liEntry = document.createElement("li");
     var divName = document.createElement("div");
     var divText = document.createElement("div");
     var xHref = document.createElement("a");
 
-    divName.innerHTML = jsObject.name;
+    divName.innerHTML = String(name);
     divName.style.fontWeight = "bold";
-    divText.innerHTML = jsObject.text;
+    divText.innerHTML = String(text);
     xHref.innerHTML = "(X)";
     xHref.href = "#";
     xHref.alt = "Delete entry";
     xHref.addEventListener("click", function () {
-        removeElement(liEntry, jsObject.id)
+        removeElement(liEntry, String(id));
     });
 
     liEntry.appendChild(divName);
@@ -78,9 +79,9 @@ function removeElement(liEntry, id) {
 }
 
 function SubmitEntry() {
-    var nameV = document.getElementById("name").value;
-    var textV = document.getElementById("text").value;
-    var toSend =  {"name":nameV, "text":textV};
+    var nameV = encodeURIComponent(document.getElementById("name").value);
+    var textV = encodeURIComponent(document.getElementById("text").value);
+    var toSend = "name=" + nameV + "&text=" + textV;
 
     // error cases
     if (nameV === "") {
@@ -97,11 +98,13 @@ function SubmitEntry() {
     xHttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 
     xHttp.onreadystatechange = function () {
+        var resp;
         if (this.readyState == 4 && this.status == 200) {
 
+            resp = JSON.parse(this.responseText);
+
             // append Entry
-            // JSON.parse(this.responseText)
-            var newItem = createGbEntry(toSend);
+            var newItem = createGbEntry(resp.id, nameV, textV);
             listTop.insertBefore(newItem, listTop.childNodes[0]);
         }
     };
