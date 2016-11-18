@@ -47,14 +47,14 @@ function createGbEntry(id, name, text) {
     var divText = document.createElement("div");
     var xHref = document.createElement("a");
 
-    divName.innerHTML = String(name);
+    divName.innerHTML = name;
     divName.style.fontWeight = "bold";
-    divText.innerHTML = String(text);
+    divText.innerHTML = text;
     xHref.innerHTML = "(X)";
     xHref.href = "#";
     xHref.alt = "Delete entry";
     xHref.addEventListener("click", function () {
-        removeElement(liEntry, String(id));
+        removeElement(liEntry, id);
     });
 
     liEntry.appendChild(divName);
@@ -79,16 +79,18 @@ function removeElement(liEntry, id) {
 }
 
 function SubmitEntry() {
-    var nameV = encodeURIComponent(document.getElementById("name").value);
-    var textV = encodeURIComponent(document.getElementById("text").value);
-    var toSend = "name=" + nameV + "&text=" + textV;
+    var name = document.getElementById("name").value;
+    var text = document.getElementById("text").value;
+    var nameC = encodeURIComponent(name);
+    var textC = encodeURIComponent(text);
+    var toSend = "name=" + nameC + "&text=" + textC;
 
     // error cases
-    if (nameV === "") {
+    if (nameC === "") {
         alert("Please provide a name.");
         return;
     }
-    if (textV === "") {
+    if (textC === "") {
         alert("Please provide some text.");
         return;
     }
@@ -103,8 +105,8 @@ function SubmitEntry() {
 
             resp = JSON.parse(this.responseText);
 
-            // append Entry
-            var newItem = createGbEntry(resp.id, nameV, textV);
+            // append Entry - answer type: Object { message: "Successful", entry: Object }
+            var newItem = createGbEntry(resp.entry.id, resp.entry.name, resp.entry.text);
             listTop.insertBefore(newItem, listTop.childNodes[0]);
         }
     };
