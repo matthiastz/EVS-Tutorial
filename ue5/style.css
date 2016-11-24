@@ -1,0 +1,13 @@
+* {
+    font: 14px normal Arial, sans-serif;
+}
+fieldset legend {
+    font-weight: bold;
+}
+table {
+    width: 100%;
+}
+table tr th {
+    text-align: left;
+    font-weight: bold;
+}
