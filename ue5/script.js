@@ -5,20 +5,16 @@
 var nameInput;
 var nameList;
 var tableCss;
-var rowId = "nameRow";
 var MAX_NAME_SIZE = 100;
 
 $(document).ready(function(){
     tableCss = {"border": "1px solid black", "border-collapse": "collapse"};
     nameInput = $("#name");
     nameList = $("#nameList");
-    nameList.css(tableCss);
-
 
     // event for buttons
     $("#add").click(addEntry);
     $("#sort").click(sortEntries);
-
 });
 
 function addEntry() {
@@ -26,15 +22,11 @@ function addEntry() {
     if (nameInput.val() === "") {
         window.alert("please enter a name");
     } else {
-
         if (nameInput.val().length > MAX_NAME_SIZE) {
             alert("input name length must be <= " + MAX_NAME_SIZE);
             return;
         }
-
         var tmpEl = $("<tr></tr>");
-        tmpEl.css(tableCss);
-        tmpEl.attr("id", rowId);
 
         // text td
         var namEl = $("<td></td>").text(nameInput.val());
@@ -69,28 +61,28 @@ function pushDown(a, b) {
 }
 
 function sortEntries() {
+    // TODO: problem: names with starting capital letter will come before SMALL starting letter
+    // TODO: also numbers could produce problems (use special order function for sort() )
 
     // all elements, first excluded (table header)
     var nameRows = $("tr").first().nextAll();
-    var n = nameRows.length;
 
-    // bubbleSort
-    for (var j = 0; j < n; j++) {
+    var tempEl = nameRows.first()
+    var namesArrayToSort = [];
 
-        var elemA = nameRows.first();
-        var elemB = elemA.next();
+    // extract the names and save it to an array
+    for (var i = 0; i < nameRows.length; i++) {
+        namesArrayToSort.push(tempEl.children("td").html());
+        tempEl = tempEl.next();
+    }
 
-        for (var i = 0; i < n; i++) {
-            var textA = elemA.children("td").html();
-            var textB = elemB.children("td").html();
+    // sort names
+    namesArrayToSort.sort();
 
-            // swap elements
-            if (textA > textB) {
-                elemB.after(elemA);
-            }
-
-            elemA = elemA.next();
-            elemB = elemA.next();
-        }
+    // put the sorted name values in the table rows (update)
+    var tempChange = nameRows.first();
+    for (var i = 0; i < nameRows.length; i++) {
+        tempChange.children("td").html(namesArrayToSort[i]);
+        tempChange = tempChange.next();
     }
 }
