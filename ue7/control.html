@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <style type="text/css">
+        body {
+            font-family: Arial, sans-serif;
+            padding: 10px;
+        }
+        .leftpart {
+            width: 500px;
+            height: 500px;
+            margin: 5px;
+        }
+    </style>
+
+    <title>Control</title>
+    <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/dojo/1.9.1/dijit/themes/soria/soria.css"/>
+    <script>dojoConfig = { async: true, gfxRenderer: "svg,silverlight,vml" }</script>
+    <script src="https://ajax.googleapis.com/ajax/libs/dojo/1.9.1/dojo/dojo.js"></script>
+    <script>
+
+        require(["dojo/dom", "dijit/form/HorizontalSlider", "dijit/form/HorizontalRuleLabels",
+                    "dojox/gfx", "dojo/domReady!"],
+
+                function (dom, HorizontalSlider, HorizontalRuleLabels) {
+
+                    var slider = new HorizontalSlider({
+                        name: "slider",
+                        value: 3,
+                        minimum: -10,
+                        maximum: 10,
+                        discreteValues: 21,
+                        intermediateChanges: true,
+                        style: "width:300px;",
+
+                        // call function to onchange event (user changed value at the slider)
+                        onChange: function (evt) {
+                            sendSpeedUpdate(this.value)
+                        }
+
+                    }, "slider");
+
+                    var hLabels = new HorizontalRuleLabels({
+                        container: "bottomDecoration",
+                        style: "width:260px;margin-left:20px;height:2em;font-size:75%;color:gray;"
+                    }, "SliderLabels");
+                }
+        );
+
+        // basic webSocket connection / logging stuff
+        try {
+            // hard coded host address, for testing purpose ok
+            var host = "ws://localhost:9000";
+            console.log("Host:", host);
+
+            var s = new WebSocket(host);
+
+            s.onopen = function (e) {
+                console.log("Socket opened.");
+            };
+
+            s.onclose = function (e) {
+                console.log("Socket closed.");
+            };
+
+            s.onmessage = function (e) {
+                console.log("Socket message:", e.data);
+            };
+
+            s.onerror = function (e) {
+                console.log("Socket error:", e);
+            };
+
+        } catch (ex) {
+            console.log("Socket exception:", ex);
+        }
+
+        // new function to send a value to update the engine
+        function sendSpeedUpdate(valueOfChange) {
+            s.send(valueOfChange)
+        }
+
+    </script>
+
+</head>
+<body class="soria">
+<h1>Control</h1><hr/>
+<div id="zeichenflaeche">
+    <div id="slider"></div>
+    <ol id="SliderLabels">
+        <li>-10</li>
+        <li>0</li>
+        <li>10</li>
+    </ol>
+</div>
+</body>
+</html>
