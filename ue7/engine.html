@@ -21,7 +21,6 @@
 	<script>
 
 	var bewege = null;
-	<!--var changeSpeed = null;-->
     var speed = 3;
     var SPEED_FAC = 0.8;
 
@@ -54,17 +53,10 @@
 
 			var winkel = 0.0;
 			var trans1;
-			<!--var speed = 3;-->
-
 			var kolben;
 			var scheibe;
 			var stange;
 
-			<!--
-			changeSpeed = function () {
-				speed = newSpeed * SPEED_FAC;
-			};
-			-->
 
 			bewege = function() {
 				winkel += speed;
@@ -163,7 +155,6 @@
 				trans1 = dojox.gfx.matrix.translate(SCHEIBE_MITTX, SCHEIBE_MITTY);
 				setTimeout("bewege();", 100);
 			};
-
 			erzeugeElemente();
 		}
 	);
